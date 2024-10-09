@@ -114,19 +114,16 @@ with open(OUTPUT_FILE, 'r', encoding='utf-8') as csv_file:
         json_data.append(row)
 with open("directory.json", 'w', encoding='utf-8') as json_file:
     json.dump(json_data, json_file, indent=4)
-command = [
-    "mongoimport",
-    "--uri mongodb://localhost:27017/directory",
-    "--collection employees",
-    "--file directory.json",
-    "--jsonArray",
-    "--drop"
-]
-try:
-    result = subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    print("Import Success: ", result.stdout.decode())
-except subprocess.CalledProcessError as e :
-    print("Error during import", e.stderr)
 
-#else:
-#    print("The database does not exist.")
+client = pymongo.MongoClient('localhost', 27017)
+db = client['directory']
+collection = db['employees']
+if 'employees' in db.list_collection_names():
+        db.drop_collection('employees')
+with open("directory.json", 'r', encoding='utf-8') as file:
+        data = json.load(file)
+if isinstance(data, list):
+    collection.insert_many(data)
+else:
+    collection.insert_one(data)
+print("Sucessfully populated database")
