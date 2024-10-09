@@ -26,7 +26,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
     <>
     <AuthProvider>
     <Routes>
-      <Route path="/" element={console.log("USER:", user)}></Route>
+      <Route path="/" element={<h1>Home</h1>}></Route>
       <Route path="/search" element={
         <RequireAuth>
         <SearchPage auth={isAuthenticated}/>
