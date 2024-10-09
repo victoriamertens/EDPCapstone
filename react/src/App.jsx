@@ -12,6 +12,8 @@ import {
   Navigate, 
   redirect
 } from "react-router-dom";
+import { AuthProvider } from './hooks/AuthorizationContext.jsx';
+
 
 
 function App() {
@@ -29,11 +31,13 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <>
+    <AuthProvider>
     <Routes>
       <Route path="/" element={<h1>Home</h1>}></Route>
       <Route path="/search" element={<SearchPage auth={isAuthenticated}/>}></Route>
       <Route path="/login" element={<LoginPage />}></Route>
     </Routes>
+    </AuthProvider>
     </>
   )
 }

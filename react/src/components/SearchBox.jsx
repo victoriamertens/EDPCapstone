@@ -1,5 +1,7 @@
 
 import { useState } from "react";
+import { useAuth } from '../hooks/AuthorizationContext';
+
 
 export default function SearchBox () { 
 

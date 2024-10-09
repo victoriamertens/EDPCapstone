@@ -1,24 +1,26 @@
 import { useState } from "react"
+import { useAuth } from "../hooks/AuthorizationContext";
 
 export default function LoginPage (){ 
 const [credentials, setCredentials] = useState({username: "", password: ""});
+let {login, user} = useAuth(); 
 
 const handleClick = async (e) => { 
     e.preventDefault(); 
-     const response = await fetch(`http://localhost:3000/login`, {
-        method: "POST",
-        body: JSON.stringify(credentials),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-     .then(res =>res.json());
-     console.log(response);
+    console.log("LOGGIN IN:", credentials);
+    let response = await login(credentials.username, credentials.password);
+    //  const response = await fetch(`http://localhost:3000/login`, {
+    //     method: "POST",
+    //     body: JSON.stringify(credentials),
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    // })
+    //  .then(res =>res.json());
      setCredentials({username: "", password: ""}); 
   }
 
 const handleChange = (e) => {
-    console.log("Handle sock details change:", e.target.name, e.target.value);
     const { name, value } = e.target;
     setCredentials({
       ...credentials,

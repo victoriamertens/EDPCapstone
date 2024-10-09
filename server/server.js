@@ -43,13 +43,14 @@ app.get('/search/name/:name', async (req , res) => {
 
 app.post('/login', async (req , res) => {
     let {username, password} = req.body; 
-    console.log("Logging in: ", username);
+    console.log("Logging in: ", username, password);
     let collection = await connectToMongo("auth"); 
    collection.findOne({"username": `${username}`, "password": `${password}`})
     .then(
         user => {
+            if(user){
             let response = {userId: user.userId}
-            res.json(response)}
+            res.json(response)}}
     ).catch(err => {
         console.error('Error in querying database:', err)
         res.sendStatus(500)
