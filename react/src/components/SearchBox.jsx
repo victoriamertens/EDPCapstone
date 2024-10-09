@@ -5,7 +5,8 @@ export default function SearchBox () {
 
    const [searchTerm, setSearchTerm] = useState(""); 
 
- const handleClick = async () => { 
+ const handleClick = async (e) => { 
+   e.preventDefault(); 
     const response = await fetch(`http://localhost:3000/search/name/${searchTerm}`)
     .then(res =>res.json());
     console.log(response);
@@ -18,6 +19,7 @@ export default function SearchBox () {
 
     return (
     <div>
+      <form>
       <input
                             type="text"
                             className="search-box"
@@ -26,6 +28,7 @@ export default function SearchBox () {
                             onChange={handleIdChange}
                         />
     <button onClick={handleClick}>Click Me</button>
+    </form>
     </div>
     )
 }
