@@ -29,6 +29,14 @@ app.get('/', async (_ , res) => {
     res.json(response);
 })
 
+app.get('/search/name/:name', async (req , res) => {
+    let searchName = req.params.name;
+        console.log("SEARCH NAME:", searchName);
+    let collection = await connectToMongo(); 
+    const response = await collection.find( { $text: { $search: `"${searchName}"` } } ).toArray();
+    res.json(response);
+})
+
 
 
 app.listen(process.env.EXPRESS_PORT, () => { console.log(`server running on localhost:${process.env.EXPRESS_PORT}`);}); 
