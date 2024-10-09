@@ -14,7 +14,7 @@ export default function SearchBox () {
  }
 
  const handleIdChange = (e) => { 
-   let search = e.target.value; 
+   const { name, value } = e.target;
    setSearchTerm(search); 
  }
 
