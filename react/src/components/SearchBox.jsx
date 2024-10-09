@@ -10,6 +10,7 @@ export default function SearchBox () {
     const response = await fetch(`http://localhost:3000/search/name/${searchTerm}`)
     .then(res =>res.json());
     console.log(response);
+    setSearchTerm(""); 
  }
 
  const handleIdChange = (e) => { 
