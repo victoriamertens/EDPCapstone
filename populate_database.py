@@ -1,16 +1,30 @@
 import csv
 import random
-from datetime import datetime, timedelta
 import json
 import os.path
 import pymongo
-import subprocess
+import string
 
 # Generate data for 50 characters
 NUM_ROWS = 1000
 
 # Create the CSV file
 OUTPUT_FILE = "directory.csv"
+
+class roler:
+     def __init__(self, name, focus, level):
+          self.name = name
+          self.focus = focus
+          self.level = level
+
+def create_login(name):
+    split = name.split(" ")
+    username = f"{split[0][0]}{split[1].lower()}"  
+    lenght = 12
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = "".join(random.choice(characters) for _ in range(lenght))
+    return username, password
+    
 
 fnames = [
     "John", "James", "Harry", "Leslie", "Amanda", "Emma", "Liam", "Olivia", "Noah", "Ava",
@@ -58,7 +72,8 @@ cities = [
 ]
 
 # id, name, phone, role, location, salary, manager
-data_rows = []
+employees = []
+creds = []
 names = set()
 employees = []
 numbers = set()
@@ -68,6 +83,7 @@ for i in range(1, NUM_ROWS + 1):
         name = random.choice(fnames) + " " + random.choice(lnames)
         names.add(name)
     employees.append(name)
+    username, password = create_login(name)
     while len(numbers) < i:
         first = random.randint(100, 999)
         mid = random.randint(100, 999)  
@@ -90,7 +106,13 @@ for i in range(1, NUM_ROWS + 1):
         salary,
         manager
     ]
-    data_rows.append(data_row)
+    employees.append(data_row)
+    cred = [
+        id,
+        username,
+        password
+    ]
+    creds.append(cred)
 
 populated = False
 if os.path.exists(OUTPUT_FILE):
@@ -99,13 +121,12 @@ if os.path.exists(OUTPUT_FILE):
     with open(OUTPUT_FILE, "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["id", "name", "phone", "role", "location", "salary", "manager"])
-        writer.writerows(data_rows)
-    
+        writer.writerows(employees)
 else:
     with open(OUTPUT_FILE, "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["id", "name", "phone", "role", "location", "salary", "manager"])
-        writer.writerows(data_rows)
+        writer.writerows(employees)
 
 json_data = []
 with open(OUTPUT_FILE, 'r', encoding='utf-8') as csv_file:
@@ -115,12 +136,32 @@ with open(OUTPUT_FILE, 'r', encoding='utf-8') as csv_file:
 with open("directory.json", 'w', encoding='utf-8') as json_file:
     json.dump(json_data, json_file, indent=4)
 
+cred_json_data = []
+for cred in creds:
+    cred_json_data.append({
+        "id": cred[0],
+        "username": cred[1],
+        "password": cred[2]
+    })
+with open("credentials.json", 'w', encoding='utf-8') as file:
+     json.dump(cred_json_data, file, indent=4)
+
 client = pymongo.MongoClient('localhost', 27017)
 db = client['directory']
 collection = db['employees']
 if 'employees' in db.list_collection_names():
         db.drop_collection('employees')
 with open("directory.json", 'r', encoding='utf-8') as file:
+        data = json.load(file)
+if isinstance(data, list):
+    collection.insert_many(data)
+else:
+    collection.insert_one(data)
+
+collection = db['credentials']
+if 'credentials' in db.list_collection_names():
+        db.drop_collection('credentials')
+with open("credentials.json", 'r', encoding='utf-8') as file:
         data = json.load(file)
 if isinstance(data, list):
     collection.insert_many(data)
