@@ -28,7 +28,7 @@ export default function SearchBox () {
                             value={searchTerm}
                             onChange={handleIdChange}
                         />
-    <button onClick={handleClick}>Click Me</button>
+    <button onClick={handleClick}>Search</button>
     </form>
     </div>
     )
