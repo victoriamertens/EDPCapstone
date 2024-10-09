@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { useAuth } from "../hooks/AuthorizationContext";
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage (){ 
 const [credentials, setCredentials] = useState({username: "", password: ""});
 let {login, user} = useAuth(); 
+const navigate = useNavigate();
 
 const handleClick = async (e) => { 
     e.preventDefault(); 
@@ -18,6 +20,7 @@ const handleClick = async (e) => {
     // })
     //  .then(res =>res.json());
      setCredentials({username: "", password: ""}); 
+     navigate("/search");
   }
 
 const handleChange = (e) => {
