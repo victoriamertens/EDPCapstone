@@ -1,12 +1,12 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../hooks/AuthorizationContext'; // Import the hook created earlier
+import { useAuth } from '../hooks/AuthorizationContext'; 
 
 const RequireAuth = ({ children }) => {
     const auth = useAuth();
     const location = useLocation();
+    console.log("USER in req auth:", auth?.user);
 
     if (!auth?.user) {
-        // Redirect them to the login page, but save the current location they were trying to go to after login
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 

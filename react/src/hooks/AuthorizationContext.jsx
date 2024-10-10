@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
             if (data.userId) {
                 console.log("Data returned:", data.userId);
                 setUser({
-                    username,
+                    username: username,
                     userId: data.userId // Storing the uid returned from the server
                 });
             } else {

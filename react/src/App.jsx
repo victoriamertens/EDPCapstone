@@ -14,6 +14,7 @@ import {
   redirect
 } from "react-router-dom";
 import { AuthProvider } from './hooks/AuthorizationContext.jsx';
+import EmployeePage from './components/EmployeePage.jsx'
 
 
 
@@ -30,8 +31,15 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
       <Route path="/search" element={
         <RequireAuth>
         <SearchPage auth={isAuthenticated}/>
-        </RequireAuth>}></Route>
+        </RequireAuth>}>
+      </Route>
+      <Route path="/employee/:id" element={
+        <RequireAuth>
+        <EmployeePage />
+        </RequireAuth>}>
+      </Route>
       <Route path="/login" element={<LoginPage />}></Route>
+      
     </Routes>
     </AuthProvider>
     </>
