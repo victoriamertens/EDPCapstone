@@ -33,6 +33,34 @@ app.get('/', async (_ , res) => {
     res.json(response);
 })
 
+app.get('/user/:id', async (req , res) => {
+    let userId = req.params.id; 
+    console.log("User ID:", userId);
+    let collection = await connectToMongo("search"); 
+    const response = await collection.find({"id" : `${userId}`}).toArray();
+    res.json(response);
+})
+
+app.get('/employee', async (req , res) => {
+    let {employeeId, userId} = req.body; 
+    console.log("IDs:", employeeId, userId);
+    let collection = await connectToMongo("search"); 
+    const userResponse = await collection.find({"id" : `${userId}`}).toArray()
+    const employeeResponse = await collection.find({"id" : `${employeeId}`}).toArray()
+
+    //implement security for salary 
+    console.log("USER:", userResponse, "EMP:", employeeResponse);
+    if(employeeResponse[0].manager === userResponse[0].name){ 
+        res.json(employeeResponse); 
+    } else if (userResponse[0].role === "HR"){ 
+        res.json(employeeResponse)
+    } else {
+        let redactedEmployeeResponse = employeeResponse[0]; 
+        delete redactedEmployeeResponse.salary; 
+        res.json(redactedEmployeeResponse); 
+    }
+})
+
 app.get('/search/name/:name', async (req , res) => {
     let searchName = req.params.name;
         console.log("SEARCH NAME:", searchName);
