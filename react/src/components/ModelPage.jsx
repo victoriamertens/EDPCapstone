@@ -9,7 +9,7 @@ export default function ModelPage (){
  
 const handleSubmit = async (e) => { 
     e.preventDefault(); 
-    let body = {"location": modelInputs.location, "title": modelInputs.title}
+    let body = {"location": modelInputs.location, "role": modelInputs.title}
     console.log("Handle submit");
     const response = await fetch(`http://localhost:5000/api/predict`, {
         method: "POST",
