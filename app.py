@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import pickle
 import pandas as pd
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Load the model from disk
 with open('salary_predict.pkl', 'rb') as file:
@@ -15,7 +17,7 @@ def predict():
     data = request.get_json(force=True)
     role = data['role']
     location = data['location']
-    input_df = pd.DataFrame({'role': [role], 'location': [location]})
+    input_df = pd.DataFrame({'role': [role], 'location': [location]})   
 
      # Ensure the data is a list (even if it's just one dictionary)
     #if isinstance(data, dict):
