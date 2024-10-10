@@ -41,7 +41,7 @@ app.get('/user/:id', async (req , res) => {
     res.json(response);
 })
 
-app.get('/employee', async (req , res) => {
+app.post('/employee', async (req , res) => {
     let {employeeId, userId} = req.body; 
     console.log("IDs:", employeeId, userId);
     let collection = await connectToMongo("search"); 
