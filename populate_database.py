@@ -5,8 +5,10 @@ import os.path
 import pymongo
 import string
 
+#LOOKUP HOW TO INCREASE ACCURACY OF LINEARREGRESSION MODEL
+
 # Generate data for 50 characters
-NUM_ROWS = 1000
+NUM_ROWS = 5000
 
 # Create the CSV file
 OUTPUT_FILE = "directory.csv"
@@ -107,7 +109,7 @@ def calcuate_salary(focus, location):
     else:
         value += random.randint(0, 10)
     if value >= 85:
-        salary = random.randint(165000, 200000)
+        salary = random.randint(165000, 180000)
     elif (value < 85) and (value >= 70):
         salary = random.randint(125000, 165000)
     elif (value < 70) and (value >= 55):
