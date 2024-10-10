@@ -5,7 +5,7 @@ export default function SearchPage ({auth}){
 
     return (
     <div>
-    <h1>Search Page</h1>
+    <h2>Search Directory</h2>
     <SearchBox/>
     </div>
     )
