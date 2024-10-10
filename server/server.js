@@ -37,7 +37,7 @@ app.get('/search/name/:name', async (req , res) => {
     let searchName = req.params.name;
         console.log("SEARCH NAME:", searchName);
     let collection = await connectToMongo("search"); 
-    const response = await collection.find( { $text: { $search: `"${searchName}"` } } ).toArray();
+    const response = await collection.find( { $text: { $search: `"${searchName}"` } }, { projection: { name: 1, role: 1, phone: 1, id: 1} } ).toArray();
     res.json(response);
 })
 
