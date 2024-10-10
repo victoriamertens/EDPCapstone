@@ -8,7 +8,7 @@ import string
 #LOOKUP HOW TO INCREASE ACCURACY OF LINEARREGRESSION MODEL
 
 # Generate data for 50 characters
-NUM_ROWS = 5000
+NUM_ROWS = 6000
 
 # Create the CSV file
 OUTPUT_FILE = "directory.csv"
