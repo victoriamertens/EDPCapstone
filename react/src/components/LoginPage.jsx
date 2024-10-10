@@ -42,8 +42,8 @@ return (
         value={credentials.username}
         onChange={handleChange}
                       />
-    <input type="text" placeholder="Password" name="password" value={credentials.password} onChange={handleChange}/>
-  <button onClick={handleClick}>Search</button>
+    <input type="password" placeholder="Password" name="password" value={credentials.password} onChange={handleChange}/>
+  <button onClick={handleClick}>Login</button>
   </form>
   </div>
 )

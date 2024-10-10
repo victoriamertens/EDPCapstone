@@ -16,6 +16,7 @@ import {
 import { AuthProvider } from './hooks/AuthorizationContext.jsx';
 import EmployeePage from './components/EmployeePage.jsx'
 import ModelPage from './components/ModelPage.jsx'
+import Header from './components/Header.jsx'
 
 
 
@@ -26,6 +27,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <>
+    <Header/>
     <AuthProvider>
     <Routes>
       <Route path="/" element={<h1>Home</h1>}></Route>
