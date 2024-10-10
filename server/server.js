@@ -51,9 +51,9 @@ app.post('/employee', async (req , res) => {
     //implement security for salary 
     console.log("USER:", userResponse, "EMP:", employeeResponse);
     if(employeeResponse[0].manager === userResponse[0].name){ 
-        res.json(employeeResponse); 
+        res.json(employeeResponse[0]); 
     } else if (userResponse[0].role === "HR"){ 
-        res.json(employeeResponse)
+        res.json(employeeResponse[0])
     } else {
         let redactedEmployeeResponse = employeeResponse[0]; 
         delete redactedEmployeeResponse.salary; 

@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useAuth } from '../hooks/AuthorizationContext';
 import { useEffect, useState } from "react";
+import EmployeeDetails from "./EmployeeDetails";
 
 
 export default function EmployeePage (){ 
@@ -38,7 +39,7 @@ const loadEmployeeInfo = async ()=> {
 
 
     return (
-        ( employeeInfo.name ? <p>{JSON.stringify(employeeInfo)}</p> : <p>Loading...</p>)
+        ( employeeInfo.name ? <EmployeeDetails emp={employeeInfo}/> : <p>Loading...</p>)
     )
 }
 
