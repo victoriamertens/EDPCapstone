@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import { AuthProvider } from './hooks/AuthorizationContext.jsx';
 import EmployeePage from './components/EmployeePage.jsx'
+import ModelPage from './components/ModelPage.jsx'
 
 
 
@@ -28,6 +29,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
     <AuthProvider>
     <Routes>
       <Route path="/" element={<h1>Home</h1>}></Route>
+      <Route path="/model" element={<ModelPage/>}></Route>
       <Route path="/search" element={
         <RequireAuth>
         <SearchPage auth={isAuthenticated}/>
