@@ -2,3 +2,5 @@
 node_modules/
 directory.csv
 directory.json
+*.csv
+*.json
