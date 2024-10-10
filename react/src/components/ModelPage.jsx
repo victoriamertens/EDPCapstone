@@ -18,7 +18,9 @@ const handleSubmit = async (e) => {
             "Content-Type": "application/json",
         },
     })
-    setModelResponse(response)
+    const data = await response.json();
+    console.log("Model Response:", data);
+    setModelResponse(data)
 }
 
  const handleChange = (event) => { 
@@ -35,7 +37,7 @@ const handleSubmit = async (e) => {
         <input type="text" placeholder="title" name="title" value={modelInputs.title} onChange={handleChange}/>
         <button onClick={handleSubmit}>Submit</button>
         </form>
-        
+        {modelResponse.predicted_salary ? <p>{modelResponse.predicted_salary}</p>: <></>}
         </div>
     )
 }
