@@ -4,3 +4,4 @@ directory.csv
 directory.json
 *.csv
 *.json
+*.pkl
