@@ -1,5 +1,9 @@
 export default function EmployeeDetails ({emp}){ 
 
+    const formattedNumber = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(emp.salary);
 
     return ( 
         <div >
@@ -10,7 +14,7 @@ export default function EmployeeDetails ({emp}){
         <p><strong>Phone: </strong>{emp.phone}</p>
         <p><strong>Manager: </strong> {emp.manager}</p>
         <p><strong>Location: </strong> {emp.location}</p>
-        {emp.salary ? <p><strong>Salary: </strong> {emp.salary}</p> : <p><strong>Salary: </strong> *Redacted*</p> }
+        {emp.salary ? <p><strong>Salary: </strong> {formattedNumber}</p> : <p><strong>Salary: </strong> *Redacted*</p> }
         </div>
         </div>
     )

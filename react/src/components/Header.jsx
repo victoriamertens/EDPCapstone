@@ -8,7 +8,7 @@ export default function Header (){
     return ( 
        
     <div id="header">
-    <p>Product Name Placeholder</p>
+    <h3>JARVIS </h3>
         <nav >
              {/* <Link to="/">Home</Link> */}
             

@@ -35,7 +35,7 @@ const handleChange = (e) => {
 return (
   <div id="wrapper">
     <div id="login-box">
-      <h1>Placeholder</h1>
+      <h1>JARVIS</h1>
     <form>
     <input
         type="text"
