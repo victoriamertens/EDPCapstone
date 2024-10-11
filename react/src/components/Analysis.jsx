@@ -23,7 +23,7 @@ const [analysisData, setAnalysisData] = useState({})
    
 
     return ( 
-        <div>
+        <div id="analysis">
         <h2>Company Analysis</h2>
         <div className="analysis-header">
         {analysisData.role_count ? entries.map((data)=><AnalysisHeaderBox key={data[0]} data={data}/>) : <p>Loading...</p>}

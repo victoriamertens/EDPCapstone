@@ -29,15 +29,20 @@ const handleSubmit = async (e) => {
 
  }
 
+ let currencyFormattedSalary = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  }).format(modelResponse.predicted_salary); ; 
+
     return ( 
-        <div>
-        <h1>Model</h1>
+        <div style={{ border: '1px solid black', borderRadius:'10px', marginTop: "100px" }}>
+        <h1>Predict Salary</h1>
         <form>
         <input type="text" placeholder="location" name="location" value={modelInputs.location} onChange={handleChange}/>
         <input type="text" placeholder="title" name="title" value={modelInputs.title} onChange={handleChange}/>
         <button onClick={handleSubmit}>Submit</button>
         </form>
-        {modelResponse.predicted_salary ? <p>{modelResponse.predicted_salary}</p>: <></>}
+        {modelResponse.predicted_salary ? <p>{currencyFormattedSalary}</p>: <></>}
         </div>
     )
 }

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useAuth } from '../hooks/AuthorizationContext';
 import Employee from "./Employee";
-
+import "./SearchPage.css"
 
 export default function SearchBox () { 
    let {user} = useAuth(); 
@@ -32,23 +32,30 @@ export default function SearchBox () {
 };
 
     return (
-    <div>
+      <div>
+    <div id="search-box">
+      <h2>Search Directory</h2>
       <form>
       <input
                             type="text"
+                            id="search-bubble"
                             className="search-box"
                             placeholder="Search..."
                             value={searchTerm}
                             onChange={handleIdChange}
                         />
-  <label for="search-type">Search By:</label>
-<select id="cars" name="cars" value={searchType} onChange={handleSearchTypeChange}>
+  <div id="search">
+  <label className="pad" for="search-type">Search By:</label>
+<select className="pad" name="search" value={searchType} onChange={handleSearchTypeChange}>
   <option value="name">Name</option>
   <option value="partial">Partial Name</option>
   <option value="role">Role</option>
 </select>
+</div>
     <button onClick={handleClick}>Search</button>
     </form>
+    </div>
+    <div id="search-table">
     <table>
     <thead>
         <tr>
@@ -66,5 +73,7 @@ export default function SearchBox () {
             </tbody>
             </table>
     </div>
+    </div>
+   
     )
 }

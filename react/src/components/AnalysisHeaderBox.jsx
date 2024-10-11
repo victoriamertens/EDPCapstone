@@ -17,7 +17,7 @@ export default function AnalysisHeaderBox ({data}){
           }).format(number);
      
           return (
-        <div>
+        <div className="box">
             <p><strong>{headerName[data[0]]}</strong></p>
             <p>{formattedNumber}</p>
         </div>
@@ -26,14 +26,14 @@ export default function AnalysisHeaderBox ({data}){
 
     if(typeof(data[1])=== "object") { 
         return ( 
-            <div>
-            <p>{headerName[data[0]]}</p>
+            <div className="box">
+            <p><strong>{headerName[data[0]]}</strong></p>
             <p>{data[1]._id}</p>
         </div>
         )
     } else {
     return (
-        <div>
+        <div className="box">
             <p><strong>{headerName[data[0]]}</strong></p>
             <p>{data[1]}</p>
         </div>
