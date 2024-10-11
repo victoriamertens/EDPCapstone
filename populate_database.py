@@ -4,6 +4,9 @@ import json
 import os.path
 import pymongo
 import string
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 #LOOKUP HOW TO INCREASE ACCURACY OF LINEARREGRESSION MODEL
 
@@ -122,7 +125,57 @@ def calcuate_salary(focus, location):
         salary = random.randint(10000, 40000)
     return salary
 
+def create_images(breakdown, salaries):
+    count = []
+    for i in range(len(breakdown)):
+        count.append(breakdown[i])
+        breakdown[i] = (breakdown[i]/NUM_ROWS) * 100
+    labels = ['Architecture', "Engineers", "Management", "Business", "Art"]
+    title = 'Overall Role Breakdown'
+    outfile = 'role_pie_chart.png'
+    assert np.isclose(sum(breakdown), 100.0)
+    plt.figure(figsize=(8, 8))
+    plt.pie(breakdown, labels=labels, autopct="%1.1f%%")
+    plt.title(title)
+    plt.axis('equal')
+    plt.savefig(outfile, bbox_inches='tight')
 
+    average = 0
+    for i in range (len(salaries)):
+        average += salaries[i]
+        salaries[i] = salaries[i]/count[i]
+    average = average/NUM_ROWS
+    labels = ['Architecture', "Engineers", "Management", "Business", "Art"]
+    title = 'Salary Role Breakdown'
+    outfile = 'salary_bar_graph.png'
+    plt.figure(figsize=(8, 6))
+    bars = plt.bar(labels, salaries)
+    plt.title(title)
+    plt.xlabel('Professions')
+    plt.ylabel('Yearly Salaries (in USD)')
+    plt.xticks(rotation=45)
+    for bar in bars:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, height, f'{height:.1f}', ha='center', va='bottom')
+    plt.tight_layout()
+    plt.savefig(outfile)
+
+    #Creates box with average salary in it
+    # box_width = 10
+    # box_height = 5
+    # text = "$" + str(average)
+    # outfile = 'average_salary.png'
+    # fig, ax = plt.subplots()
+    # box = patches.Rectangle((0, 0), box_width, box_height, edgecolor='black', facecolor='none', linewidth=2)
+    # ax.add_patch(box)
+    # ax.text(box_width/2, box_height/2, text, ha='center', va='center', fontsize=12)
+    # ax.set_xlim(-1, box_width+1)
+    # ax.set_ylim(-1, box_height+1)
+    # ax.set_axis_off()
+    # plt.savefig(outfile, bbox_inches='tight')
+
+    plt.close()
+    
 
 fnames = [
     "John", "James", "Harry", "Leslie", "Amanda", "Emma", "Liam", "Olivia", "Noah", "Ava",
@@ -161,6 +214,8 @@ names = set()
 numbers = set()
 roles = create_roles()
 cities = create_location()
+breakdown = [0, 0, 0, 0, 0] #Arch, Eng, Mang, Bus, Art
+salaries = [0, 0, 0, 0, 0]
 for i in range(1, NUM_ROWS + 1):
     id = i
     while len(names) < i:
@@ -177,6 +232,22 @@ for i in range(1, NUM_ROWS + 1):
     role = random.choice(roles)
     location = random.choice(cities)
     salary = calcuate_salary(role.focus, location.population)
+    match role.focus:
+        case "Architecture":
+            breakdown[0] = breakdown[0] + 1
+            salaries[0] = salaries[0] + salary
+        case "Engineer":
+            breakdown[1] = breakdown[1] + 1
+            salaries[1] = salaries[1] + salary
+        case "Management":
+            breakdown[2] = breakdown[2] + 1
+            salaries[2] = salaries[2] + salary
+        case "Business":
+            breakdown[3] = breakdown[3] + 1
+            salaries[3] = salaries[3] + salary
+        case "Art":
+            breakdown[4] = breakdown[4] + 1
+            salaries[4] = salaries[4] + salary
     if i != 1:
         manager = random.choice(temp_names)
     else:
@@ -198,6 +269,10 @@ for i in range(1, NUM_ROWS + 1):
     ]
     creds.append(cred)
 
+if os.path.exists('role_pie_chart.png'):
+    os.remove('role_pie_chart.png')
+    os.remove('salary_bar_graph.png')
+create_images(breakdown, salaries)
 populated = False
 if os.path.exists(OUTPUT_FILE):
     populated = True
