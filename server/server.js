@@ -65,8 +65,68 @@ app.get('/search/name/:name', async (req , res) => {
     let searchName = req.params.name;
         console.log("SEARCH NAME:", searchName);
     let collection = await connectToMongo("search"); 
-    const response = await collection.find( { $text: { $search: `"${searchName}"` } }, { projection: { name: 1, role: 1, phone: 1, id: 1} } ).toArray();
+    const response = await collection.find( { $text: { $search: `"${searchName}"` } }, { projection: { name: 1, role: 1, phone: 1, id: 1} } ).sort({name: 1}).toArray();
     res.json(response);
+})
+app.get('/search/partial/:name', async (req , res) => {
+    let searchName = req.params.name;
+        console.log("SEARCH NAME:", searchName);
+    let collection = await connectToMongo("search"); 
+    const response = await collection.find( { name: { $regex: searchName, $options: 'i' } }, { projection: { name: 1, role: 1, phone: 1, id: 1} } ).sort({name: 1}).toArray();
+    res.json(response);
+})
+
+app.get('/search/role/:name', async (req , res) => {
+    let searchName = req.params.name;
+        console.log("SEARCH NAME:", searchName);
+    let collection = await connectToMongo("search"); 
+    const response = await collection.find( { role: { $regex: searchName, $options: 'i' } }, { projection: { name: 1, role: 1, phone: 1, id: 1} } ).sort({name: 1}).toArray();
+    res.json(response);
+})
+
+app.get('/analysis', async (req , res) => {
+    let collection = await connectToMongo("search"); 
+    const employeeCount = await collection.countDocuments();
+    const roleCount = await collection.aggregate([
+        { $group: { _id: "$role" } },  
+        { $count: "distinctRoles" }    
+      ]).toArray();
+      const averageSalary = await collection.aggregate([
+        { 
+          $group: { 
+            _id: null,               
+            averageSalary: { $avg: { $toInt: "$salary" } }  
+         } 
+        }
+      ]).toArray();
+
+      const costEmployees = await collection.aggregate([
+        {$group: { 
+            _id: null,              
+            totalSalary: { $sum: { $toInt: "$salary" } }  
+          } 
+        }
+      ]).toArray();
+
+      const mostCommonLocation = await collection.aggregate([
+        { $group: { 
+            _id: "$location",       
+            count: { $sum: 1 }      
+          } 
+        },
+        { $sort: { count: -1 }     
+        },
+        { $limit: 1                 
+        }]).toArray();
+
+      let response = {
+        employee_count: employeeCount, 
+        role_count: roleCount[0].distinctRoles, 
+        avg_salary : averageSalary[0].averageSalary,
+        total_cost: costEmployees[0].totalSalary,
+        commonLocation: mostCommonLocation[0]
+      }
+     res.json(response);
 })
 
 app.post('/login', async (req , res) => {

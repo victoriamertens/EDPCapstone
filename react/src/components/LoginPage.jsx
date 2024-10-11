@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useAuth } from "../hooks/AuthorizationContext";
 import { useNavigate } from 'react-router-dom';
+import "./Login.css"
 
 export default function LoginPage (){ 
 const [credentials, setCredentials] = useState({username: "", password: ""});
@@ -32,7 +33,9 @@ const handleChange = (e) => {
   };
 
 return (
-    <div>
+  <div id="wrapper">
+    <div id="login-box">
+      <h1>JARVIS</h1>
     <form>
     <input
         type="text"
@@ -42,9 +45,10 @@ return (
         value={credentials.username}
         onChange={handleChange}
                       />
-    <input type="text" placeholder="Password" name="password" value={credentials.password} onChange={handleChange}/>
-  <button onClick={handleClick}>Search</button>
+    <input type="password" placeholder="Password" name="password" value={credentials.password} onChange={handleChange}/>
+  <button id="login-btn" onClick={handleClick}>Login</button>
   </form>
+  </div>
   </div>
 )
 

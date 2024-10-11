@@ -15,6 +15,9 @@ import {
 } from "react-router-dom";
 import { AuthProvider } from './hooks/AuthorizationContext.jsx';
 import EmployeePage from './components/EmployeePage.jsx'
+import ModelPage from './components/ModelPage.jsx'
+import Header from './components/Header.jsx'
+import Analysis from './components/Analysis.jsx'
 
 
 
@@ -25,12 +28,24 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
     <>
+    
     <AuthProvider>
+    <Header/>
     <Routes>
       <Route path="/" element={<h1>Home</h1>}></Route>
+      
+      <Route path="/model" element={
+        <RequireAuth>
+        <ModelPage/>
+        </RequireAuth>}></Route>
       <Route path="/search" element={
         <RequireAuth>
         <SearchPage auth={isAuthenticated}/>
+        </RequireAuth>}>
+      </Route>
+      <Route path="/analysis" element={
+        <RequireAuth>
+        <Analysis/>
         </RequireAuth>}>
       </Route>
       <Route path="/employee/:id" element={

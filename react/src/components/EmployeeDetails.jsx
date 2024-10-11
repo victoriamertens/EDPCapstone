@@ -1,35 +1,21 @@
 export default function EmployeeDetails ({emp}){ 
 
-    id
-    : 
-    "642"
-    location
-    : 
-    "Dallas"
-    manager
-    : 
-    "Jackson Allen"
-    name
-    : 
-    "Sam Flores"
-    phone
-    : 
-    "252-895-3482"
-    role
-    : 
-    "Software Engineer"
-    _id
-    : 
-    "67069b406d4984a898dfe502"
+    const formattedNumber = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(emp.salary);
+
     return ( 
-        <div>
+        <div >
         <h1>Employee Details</h1>
-        <p>Name: {emp.name}</p>
-        <p>Role: {emp.role}</p>
-        <p>Phone: {emp.phone}</p>
-        <p>Manager: {emp.manager}</p>
-        <p>Location: {emp.location}</p>
-        {emp.salary ? <p>Salary: {emp.salary}</p> : <p>Salary: redacted</p> }
+        <div style={{ border: '1px solid black', borderRadius:'10px' }} id="emp-details">
+        <p><strong>Name: </strong>{emp.name}</p>
+        <p><strong>Role: </strong> {emp.role}</p>
+        <p><strong>Phone: </strong>{emp.phone}</p>
+        <p><strong>Manager: </strong> {emp.manager}</p>
+        <p><strong>Location: </strong> {emp.location}</p>
+        {emp.salary ? <p><strong>Salary: </strong> {formattedNumber}</p> : <p><strong>Salary: </strong> *Redacted*</p> }
+        </div>
         </div>
     )
 }
