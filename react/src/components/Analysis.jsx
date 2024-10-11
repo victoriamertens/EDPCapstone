@@ -27,6 +27,13 @@ const [analysisData, setAnalysisData] = useState({})
         <h2>Company Analysis</h2>
         <div className="analysis-header">
         {analysisData.role_count ? entries.map((data)=><AnalysisHeaderBox key={data[0]} data={data}/>) : <p>Loading...</p>}
+       
+        
+        </div>
+        <div id="charts">
+        <img src="/role_pie_chart.png" alt="Role Pie Chart" />
+        <img src="/salary_bar_graph.png" alt="Role Pie Chart" />
+
         </div>
         </div>
     )
